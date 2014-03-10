@@ -22,7 +22,10 @@ exports.initWebApp = function(options) {
         if (type !== 'http' && type !== 'https') return;
         check.lastModified = '';
         var options = check.getPollerParam('lastModified');
-        check.setPollerParam('lastModified', options);
+        if(options!=undefined)
+            check.setPollerParam('lastModified', options);
+        else
+            check.setPollerParam('lastModified', '');
         partial.push(ejs.render(template, { locals: { check: check } }));
     });
 
