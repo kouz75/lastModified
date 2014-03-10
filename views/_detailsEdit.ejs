@@ -1,0 +1,43 @@
+        <fieldset>
+          <div class="control-group">
+            <label class="control-label">Last modified</label>
+            <div class="controls">
+              <div class="input-prepend input-append">
+                <input type="text" name="check[lastModified]" value="<%=check.getPollerParam('lastModified')%>" class="span2" />
+                <span class="add-on">s</span>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+<script>
+var lastModifiedFieldSelector = 'form input[name="check\\[lastModified\\]"]';
+function updatelastModifiedIntervalTooltip() {
+  var value = $(lastModifiedFieldSelector).val();
+
+ $(lastModifiedFieldSelector + ' + span').html('s (');
+  if (value > 60 ) {
+        var $result="";
+        var numdays = Math.floor(value / 86400);
+        var numhours = Math.floor((value % 86400) / 3600);
+        var numminutes = Math.floor(((value % 86400) % 3600) / 60);
+        var numseconds = ((value % 86400) % 3600) % 60;
+        if (numdays>0 && numdays!= undefined)
+            $result=numdays + ' days ';
+        if (numhours>0 && numhours!= undefined)
+            $result+=numhours + 'h';
+        if (numminutes>0 && numminutes!= undefined)
+            $result+=numminutes + 'm ';
+        if (numseconds>0)
+            $result+=numseconds + ' s';
+    $(lastModifiedFieldSelector + ' + span').html('s ('+$result+ ')');
+  } else {
+    $(lastModifiedFieldSelector + ' + span').html('s');
+  }
+}
+$(document).ready(function() {
+  updatelastModifiedIntervalTooltip();
+  $(lastModifiedFieldSelector).bind('keypress keyup', updatelastModifiedIntervalTooltip);
+});
+
+</script>
+
